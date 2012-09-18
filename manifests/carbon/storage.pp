@@ -1,15 +1,23 @@
-# Define graphite::carbon::storage
+# Define: graphite::carbon::storage
 #
-# Configure carbon storage schemas
+# Add a storage schema entry to carbon
 #
 # Parameters:
-#   pattern: Pattern to match metric agains
-#   retentions: Retentions for the metric as a string
+#   pattern   : Metric pattern to match (required)
+#   retentions: Retention rules for the metric as a string (required)
+#   order     : Order the rules appear in the schema file (default=10)
 #
-define graphite::carbon::storage ( $pattern,$retentions){
+# Example:
+#
+#   graphite::carbon::storage{'default_1min_for_1day':
+#     pattern    => '.*',
+#     retentions => '60s:1d',
+#   }
+#
+define graphite::carbon::storage ( $pattern,$retentions,$order=10){
   concat::fragment {$name:
     target  => $graphite::r_schema_file,
-    order   => 10,
+    order   => $order,
     content => template('graphite/storage-schemas.erb'),
     notify  => Service['carbon']
   }

@@ -13,7 +13,8 @@ describe 'graphite::carbon::storage' do
     it {
       should contain_concat__fragment('graphite-default').with(
         'target'  => '/etc/carbon/storage-schemas.conf',
-        'content' => /\[graphite-default\]\s+pattern = \.\*\s+retentions = 60s:1d/m
+        'content' => /\[graphite-default\]\s+pattern = \.\*\s+retentions = 60s:1d/m,
+        'order'   => 10
       )
     }
   end
@@ -32,4 +33,20 @@ describe 'graphite::carbon::storage' do
       )
     }
   end
+  context 'with order =>' do
+    let (:pre_condition) {'include graphite'}
+    let (:title) {'graphite-default'}
+    let (:params) {{
+      :pattern    => '.*',
+      :retentions => '60s:1d',
+      :order      => 99,
+    }}
+
+    it {
+      should contain_concat__fragment('graphite-default').with(
+        'order' => 99
+      )
+    }
+  end
+
 end
