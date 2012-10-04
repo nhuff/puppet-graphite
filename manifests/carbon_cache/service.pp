@@ -1,7 +1,4 @@
-class graphite::carbon::service {
-
-
-
+class graphite::carbon_cache::service {
   service { 'carbon':
     ensure     => running,
     enable     => true,

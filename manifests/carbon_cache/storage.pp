@@ -14,7 +14,7 @@
 #     retentions => '60s:1d',
 #   }
 #
-define graphite::carbon::storage ( $pattern,$retentions,$order=10){
+define graphite::carbon_cache::storage ( $pattern,$retentions,$order=10){
   concat::fragment {$name:
     target  => $graphite::r_schema_file,
     order   => $order,

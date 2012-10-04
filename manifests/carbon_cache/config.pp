@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class graphite::carbon::config {
+class graphite::carbon_cache::config {
   include concat::setup
   concat { $graphite::r_schema_file:
     group   => '0',

@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class graphite::carbon::package {
+class graphite::carbon_cache::package {
   package {'carbon':
     ensure => present;
   }
