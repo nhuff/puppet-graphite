@@ -43,5 +43,9 @@ define graphite::carbon::cache (
       group => 0,
       mode  => '644',
     }
+    concat::fragment{"schema_header_${title}":
+      target  => "${r_conf_dir}/storage-schemas.conf",
+      content => "#This file managed by puppet\n"
+    }
   }
 }
