@@ -14,12 +14,16 @@
 #
 # * Update documentation
 #
-class graphite::web  {
+class graphite::web (
+  $package = 'UNSET'
+) {
+  include graphite::params
 
-  require graphite::params
-  include graphite::web::package
-  include graphite::web::config
-  include graphite::web::service
+  $r_package = $package ? {
+    'UNSET' => $graphite::params::web_package,
+    default => $package
+  }
+  package { 'graphite-web': ensure => present }
 }
 
 

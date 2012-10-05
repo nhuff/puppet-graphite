@@ -19,25 +19,6 @@ class graphite::carbon (
     default => $conf_dir
   }
 
-  $r_storage_dir = $storage_dir ? {
-    'UNSET' => $graphite::params::carbon_storage_dir,
-    default => $storage_dir
-  }
-
-  $r_pid_dir = $pid_dir ? {
-    'UNSET' => $graphite::params::carbon_pid_dir,
-    default => $pid_dir
-  }
-
-  $r_log_dir = $log_dir ? {
-    'UNSET' => $graphite::params::carbon_log_dir,
-    default => $log_dir
-  }
-
-  $r_user = $user ? {
-    'UNSET' => $graphite::params::carbon_user,
-    default => $user
-  }
 
   package{$r_package: ensure => 'installed'}
 
