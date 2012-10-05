@@ -1,18 +1,10 @@
-# = Class: graphite
-#
-# This module manages graphite
-#
-# == Sample Usage:
-#
-#   include graphite
-#
-# == Todo:
-#
-# * Implement user creation.
-#
 class graphite::params {
   $whisper_package = 'whisper'
   $carbon_package = 'carbon'
   $carbon_conf_dir = '/etc/carbon'
+  $carbon_user = 'carbon'
+  $carbon_storage_dir = '/var/lib/carbon'
+  $carbon_pid_dir = '/var/run'
+  $carbon_log_dir = '/var/log/carbon'
 }
 
