@@ -35,4 +35,13 @@ define graphite::carbon::cache (
     content => template('graphite/carbon_cache.erb'),
     order   => 50,
   }
+
+  #Possible for multiple cache instances to share a schema file.
+  if ! defined(Concat["${r_conf_dir}/storage-schemas.conf"]) {
+    concat{"${r_conf_dir}/storage-schemas.conf":
+      owner => $r_user,
+      group => 0,
+      mode  => '644',
+    }
+  }
 }

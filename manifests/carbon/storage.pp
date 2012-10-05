@@ -14,9 +14,14 @@
 #     retentions => '60s:1d',
 #   }
 #
-define graphite::carbon_cache::storage ( $pattern,$retentions,$order=10){
-  concat::fragment {$name:
-    target  => $graphite::r_schema_file,
+define graphite::carbon::storage (
+  $pattern,
+  $retentions,
+  $conf_dir=$graphite::carbon::r_conf_dir,
+  $order=10
+){
+  concat::fragment {"carbon_storage_${name}":
+    target  => "${conf_dir}/storage-schemas.conf",
     order   => $order,
     content => template('graphite/storage-schemas.erb'),
     notify  => Service['carbon']
