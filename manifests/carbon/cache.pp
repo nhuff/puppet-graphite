@@ -26,12 +26,12 @@ define graphite::carbon::cache (
   }
 
   $r_conf_dir = $conf_dir ? {
-    'UNSET' => $graphite::params::carbon_conf_dir,
+    'UNSET' => $graphite::carbon::r_conf_dir,
     default => $conf_dir
   }
 
   concat::fragment{"carbon_cache_${title}":
-    target  => "${conf_dir}/carbon.conf",
+    target  => "${r_conf_dir}/carbon.conf",
     content => template('graphite/carbon_cache.erb'),
     order   => 50,
   }
