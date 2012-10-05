@@ -49,7 +49,7 @@ class graphite::carbon (
 
   concat::fragment{'carbon_header':
     target  => "${r_conf_dir}/carbon.conf",
-    content => template('graphite/carbon_header.erb'),
+    content => "#This file is managed by puppet\n",
     order   => '1'
   }
 }
