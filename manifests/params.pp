@@ -11,8 +11,8 @@
 # * Implement user creation.
 #
 class graphite::params {
-  $time_zone           = undef
-  $schema_file         = '/etc/carbon/storage-schemas.conf'
-  $local_settings_file = '/etc/graphite-web/local_settings.py'
+  $whisper_package = 'whisper'
+  $carbon_package = 'carbon'
+  $carbon_conf_dir = '/etc/carbon'
 }
 

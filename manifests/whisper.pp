@@ -6,14 +6,18 @@
 #
 # Installs the whisper package.
 #
-# == Todo:
-#
-# * Update documentation
-#
-class graphite::whisper {
+class graphite::whisper (
+  $package = 'UNSET'
+) {
+  include graphite::params
+  $r_package = $package ? {
+    'UNSET' => $graphite::params::whisper_package,
+    default => $package
+  }
 
-  include graphite::whisper::package
-  include graphite::whisper::config
+  package {$r_package:
+    ensure => present;
+  }
 
 }
 
