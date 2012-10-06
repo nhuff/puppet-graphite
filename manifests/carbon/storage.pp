@@ -24,6 +24,5 @@ define graphite::carbon::storage (
     target  => "${conf_dir}/storage-schemas.conf",
     order   => $order,
     content => template('graphite/storage-schemas.erb'),
-    notify  => Service['carbon']
   }
 }
