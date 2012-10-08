@@ -29,6 +29,12 @@ define graphite::carbon::cache (
     'UNSET' => $graphite::carbon::r_conf_dir,
     default => $conf_dir
   }
+  
+  file{"${r_storage_dir}/whisper":
+    ensure => 'directory',
+    owner  => $r_user,
+    mode   => '0644',
+  }
 
   concat::fragment{"carbon_cache_${title}":
     target  => "${r_conf_dir}/carbon.conf",
