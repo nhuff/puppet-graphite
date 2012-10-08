@@ -45,9 +45,10 @@ define graphite::carbon::cache (
   #Possible for multiple cache instances to share a schema file.
   if ! defined(Concat["${r_conf_dir}/storage-schemas.conf"]) {
     concat{"${r_conf_dir}/storage-schemas.conf":
-      owner => $r_user,
-      group => 0,
-      mode  => '644',
+      owner   => $r_user,
+      group   => 0,
+      mode    => '644',
+      require => Package['carbon'],
     }
     concat::fragment{"schema_header_${title}":
       target  => "${r_conf_dir}/storage-schemas.conf",
@@ -59,9 +60,10 @@ define graphite::carbon::cache (
   #Possible for multiple cache instances to share an aggregation file.
   if ! defined(Concat["${r_conf_dir}/storage-aggregation.conf"]) {
     concat{"${r_conf_dir}/storage-aggregation.conf":
-      owner => $r_user,
-      group => 0,
-      mode  => '644',
+      owner   => $r_user,
+      group   => 0,
+      mode    => '644',
+      require => Package['carbon'],
     }
     concat::fragment{"storage_aggregation_header_${title}":
       target  => "${r_conf_dir}/storage-aggregation.conf",
