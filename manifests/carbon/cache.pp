@@ -56,6 +56,20 @@ define graphite::carbon::cache (
     }
   }
 
+  #Possible for multiple cache instances to share an aggregation file.
+  if ! defined(Concat["${r_conf_dir}/storage-aggregation.conf"]) {
+    concat{"${r_conf_dir}/storage-aggregation.conf":
+      owner => $r_user,
+      group => 0,
+      mode  => '644',
+    }
+    concat::fragment{"storage_aggregation_header_${title}":
+      target  => "${r_conf_dir}/storage-aggregation.conf",
+      content => "#This file managed by puppet\n",
+      order   => 01
+    }
+  }
+
   service{"carbon-cache-${title}":
     ensure   => true,
     provider => 'base',

@@ -20,12 +20,11 @@ define graphite::carbon::storage_aggregation (
   $pattern,
   $method,
   $xFilesFactor = 0,
-  $order = 50)
-{
-  $conf = $graphite::storage_aggregation_file
-
+  $order = 50,
+  $conf_dir = $graphite::carbon::r_conf_dir
+){
   concat::fragment {"graphite_agg_${title}":
-    target  => $conf,
+    target  => "${conf_dir}/storage-aggregation.conf",
     order   => $order,
     content => template('graphite/storage-aggregation.erb'),
   }
