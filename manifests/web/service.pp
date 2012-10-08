@@ -1,3 +1,0 @@
-class graphite::web::service {
-
-}
