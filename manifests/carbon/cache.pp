@@ -6,22 +6,22 @@ define graphite::carbon::cache (
   $conf_dir    = 'UNSET'
 ) {
   $r_storage_dir = $storage_dir ? {
-    'UNSET' => $graphite::params::carbon_storage_dir,
+    'UNSET' => $graphite::carbon::r_storage_dir,
     default => $storage_dir
   }
 
   $r_pid_dir = $pid_dir ? {
-    'UNSET' => $graphite::params::carbon_pid_dir,
+    'UNSET' => $graphite::carbon::r_pid_dir,
     default => $pid_dir
   }
 
   $r_log_dir = $log_dir ? {
-    'UNSET' => $graphite::params::carbon_log_dir,
+    'UNSET' => $graphite::carbon::r_log_dir,
     default => $log_dir
   }
 
   $r_user = $user ? {
-    'UNSET' => $graphite::params::carbon_user,
+    'UNSET' => $graphite::carbon::r_user,
     default => $user
   }
 
@@ -54,5 +54,13 @@ define graphite::carbon::cache (
       content => "#This file managed by puppet\n",
       order   => 01
     }
+  }
+
+  service{"carbon-cache-${title}":
+    provider => 'base',
+    ensure   => true,
+    start    => "${graphite::carbon::r_graphite_root}/bin/carbon-cache.py --instance=${title} start",
+    stop     => "${graphite::carbon::r_graphite_root}/bin/carbon-cache.py --instance=${title} stop",
+    status   => "${graphite::carbon::r_graphite_root}/bin/carbon-cache.py --instance=${title} status",
   }
 }

@@ -18,12 +18,16 @@ class graphite::web (
   $package       = 'UNSET',
   $user          = 'UNSET',
   $log_dir       = 'UNSET',
-  $settings_file = 'UNSET',
   $index_file    = 'UNSET',
   $db_config     = 'UNSET',
   $graphite_root = 'UNSET'
 ) {
   include graphite::params
+
+  $r_graphite_root = $graphite_root ? {
+    'UNSET' => $graphite::params::graphite_root,
+    default => $graphite_root
+  }
 
   $r_package = $package ? {
     'UNSET' => $graphite::params::web_package,
@@ -31,7 +35,7 @@ class graphite::web (
   }
 
   $r_log_dir = $log_dir ? {
-    'UNSET' => $graphite::params::web_log_dir,
+    'UNSET' => "${r_graphite_root}/storage/log/webapp",
     default => $log_dir
   }
 
@@ -40,25 +44,25 @@ class graphite::web (
     default => $user
   }
 
-  $r_settings_file = $settings_file ? {
-    'UNSET' => $graphite::params::web_settings_file,
-    default => $settings_file
-  }
-
   $r_index_file = $index_file ? {
-    'UNSET' => $graphite::params::web_index_file,
+    'UNSET' => "${r_graphite_root}/storage/index",
     default => $index_file
   }
 
-  $r_db_config = $db_config ? {
-    'UNSET' => $graphite::params::web_db_config,
-    default => $db_config
+  #Can't have hash in selector so have to use case here
+  case $db_config  {
+    'UNSET' : { $r_db_config = {
+        dbname   => "${r_graphite_root}/storage/graphite.db",
+        engine   => 'django.db.backends.sqlite3',
+        user     => '',
+        password => '',
+        host     => '',
+        port     => ''
+      }
+    }
+    default : {$r_db_config =  $db_config}
   }
 
-  $r_graphite_root = $graphite_root ? {
-    'UNSET' => $graphite::params::graphite_root,
-    default => $graphite_root
-  }
 
   file {$r_log_dir:
     ensure  => 'directory',
@@ -67,7 +71,7 @@ class graphite::web (
     require => Package['graphite-web'],
   }
 
-  file{$r_settings_file:
+  file{"${r_graphite_root}/webapp/graphite/local_settings.py":
     ensure  => 'file',
     content => template('graphite/local_settings.py.erb','graphite/web_db.erb'),
     mode    => '0644',
@@ -116,6 +120,3 @@ class graphite::web (
 
   package { 'graphite-web': ensure => present }
 }
-
-
-

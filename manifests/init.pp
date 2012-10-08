@@ -11,35 +11,29 @@
 #   include graphite
 #
 # == Todo:
-#
-# * Implement user creation.
-#
 class graphite(
-  $local_settings_file = 'UNSET',
-  $schema_file         = 'UNSET',
-  $time_zone           = 'UNSET'
+  $user = 'UNSET',
+  $graphite_root = 'UNSET'
 ){
-
   include graphite::params
-
-  $r_local_settings_file = $local_settings_file ? {
-    'UNSET' => $graphite::params::local_settings_file,
-    default => $local_settings_file
-  }
-
-  $r_schema_file = $schema_file ? {
-    'UNSET' => $graphite::params::schema_file,
-    default => $schema_file,
-  }
-
-  $r_time_zone = $time_zone ? {
-    'UNSET' => $graphite::params::time_zone,
-    default => $time_zone,
-  }
-
-  include graphite::carbon
   include graphite::whisper
-  include graphite::web
+  
+  $r_graphite_root = $graphite_root ? {
+    'UNSET' => $graphite::params::graphite_root,
+    default => $graphite_root
+  }
 
+  class{'graphite::carbon':
+    user        => $user,
+    graphite_root => $r_graphite_root,
+  }
+  class{'graphite::web':
+    user => $user,
+    graphite_root => $r_graphite_root,
+  }
+  Class['graphite::whisper'] -> Class['graphite::carbon']
+  Class['graphite::carbon'] -> Class['graphite::web']
+
+  carbon::cache{'a':}
 }
 
