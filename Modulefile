@@ -1,7 +1,7 @@
 name    'nhuff-graphite'
 version '0.0.1'
 source 'github'
-author 'Kris Buytaert'
+author 'Nathan Huff,Kris Buytaert'
 license 'GPL'
 summary 'This module installs and configures graphite'
 project_page ''
