@@ -1,17 +1,12 @@
-# = Class: graphite
-#
-# This module manages graphite
-#
-# == Sample Usage:
-#
-#   include graphite
-#
-# == Todo:
-#
-# * Implement user creation.
-#
-class graphite::params ($time_zone = undef) {
-
-
+class graphite::params {
+  $graphite_root = '/opt/graphite'
+  $whisper_package = 'whisper'
+  $carbon_package = 'carbon'
+  $carbon_user = 'root'
+  $web_package = 'graphite-web'
+  $web_user = $::osfamily ? {
+    'RedHat' => 'apache',
+    'Debian' => 'www-data',
+    default  => 'root'
+  }
 }
-
