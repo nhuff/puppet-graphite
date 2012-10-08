@@ -16,7 +16,7 @@
 #     xFilesFactor => '0.1',
 #   }
 #
-define graphite::carbon_cache::storage_aggregation (
+define graphite::carbon::storage_aggregation (
   $pattern,
   $method,
   $xFilesFactor = 0,

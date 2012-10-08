@@ -5,8 +5,8 @@ class graphite::params {
   $carbon_user = 'root'
   $web_package = 'graphite-web'
   $web_user = $::osfamily ? {
-    'RedHat' => 'apache', 
-    'Debian' => 'www-data', 
-    default  => 'root' 
+    'RedHat' => 'apache',
+    'Debian' => 'www-data',
+    default  => 'root'
   }
 }

@@ -29,7 +29,7 @@ define graphite::carbon::cache (
     'UNSET' => $graphite::carbon::r_conf_dir,
     default => $conf_dir
   }
-  
+
   file{"${r_storage_dir}/whisper":
     ensure => 'directory',
     owner  => $r_user,
@@ -57,8 +57,8 @@ define graphite::carbon::cache (
   }
 
   service{"carbon-cache-${title}":
-    provider => 'base',
     ensure   => true,
+    provider => 'base',
     start    => "${graphite::carbon::r_graphite_root}/bin/carbon-cache.py --instance=${title} start",
     stop     => "${graphite::carbon::r_graphite_root}/bin/carbon-cache.py --instance=${title} stop",
     status   => "${graphite::carbon::r_graphite_root}/bin/carbon-cache.py --instance=${title} status",
