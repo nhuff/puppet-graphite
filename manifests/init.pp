@@ -19,7 +19,7 @@ class graphite(
   include graphite::whisper
 
   anchor{'graphite::start':}
-  anchor{'graphite:end':}
+  anchor{'graphite::end':}
 
   $r_graphite_root = $graphite_root ? {
     'UNSET' => $graphite::params::graphite_root,

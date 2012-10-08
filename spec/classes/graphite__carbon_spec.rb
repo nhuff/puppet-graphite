@@ -5,7 +5,7 @@ describe 'graphite::carbon' do
     let(:facts) {{ :concat_basedir => '/var/lib/puppet/concat' }}
     it {
       should contain_package('carbon')
-      should contain_concat('/etc/carbon/carbon.conf')
+      should contain_concat('/opt/graphite/conf/carbon.conf')
       should contain_concat__fragment('carbon_header')
     }
   end
@@ -19,9 +19,9 @@ describe 'graphite::carbon' do
   end
   context 'with conf_dir =>' do
     let(:facts) {{ :concat_basedir => '/var/lib/puppet/concat' }}
-    let(:params) {{ :conf_dir => '/opt/graphite/conf' }}
+    let(:params) {{ :conf_dir => '/etc/graphite/conf' }}
     it {
-      should contain_concat('/opt/graphite/conf/carbon.conf')
+      should contain_concat('/etc/graphite/conf/carbon.conf')
     }
   end
 end

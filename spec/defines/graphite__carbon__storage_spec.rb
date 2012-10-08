@@ -17,7 +17,7 @@ describe 'graphite::carbon::storage' do
 
     it {
       should contain_concat__fragment('carbon_storage_graphite-default').with(
-        'target'  => '/etc/carbon/storage-schemas.conf',
+        'target'  => '/opt/graphite/conf/storage-schemas.conf',
         'content' => /\[graphite-default\]\s+pattern = \.\*\s+retentions = 60s:1d/m,
         'order'   => 10
       )
